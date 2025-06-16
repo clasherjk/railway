@@ -34,7 +34,7 @@ bot.onText(/\/player (.+)/, async (msg, match) => {
   const tag = match[1].replace('#', '%23');
 
   try {
-    const res = await fetchData(`https://proxy.royaleapi.dev/v1/players/${tag}`);
+    const res = await fetchData(`https://cocproxy.royaleapi.dev/v1/players/${tag}`);
     const p = res.data;
 
     const troops = p.troops
