@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>COC Player Info</title>
+  <meta charset="UTF-8">
+  <title>Clash of Clans Player Lookup</title>
 </head>
 <body>
-  <h1>Clash of Clans Player Lookup</h1>
+  <h1>COC Player Lookup</h1>
   <input type="text" id="playerTag" placeholder="#PLAYER_TAG" />
-  <button onclick="fetchPlayer()">Get Info</button>
-  <div id="playerInfo"></div>
+  <button onclick="fetchPlayer()">Search</button>
+  <div id="result"></div>
 
   <script>
     async function fetchPlayer() {
@@ -17,15 +16,15 @@
       const res = await fetch(`/api/player?tag=${tag}`);
       const data = await res.json();
 
-      const info = document.getElementById('playerInfo');
+      const div = document.getElementById('result');
       if (res.ok) {
-        info.innerHTML = `
+        div.innerHTML = `
           <p><strong>Name:</strong> ${data.name}</p>
-          <p><strong>Town Hall:</strong> ${data.townHallLevel}</p>
+          <p><strong>Town Hall Level:</strong> ${data.townHallLevel}</p>
           <p><strong>Trophies:</strong> ${data.trophies}</p>
         `;
       } else {
-        info.innerHTML = `<p style="color:red;">${data.message || data.error || 'Error'}</p>`;
+        div.innerHTML = `<p style="color:red;">Error: ${data.message || data.error}</p>`;
       }
     }
   </script>
