@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>COC Player Info</title>
+</head>
+<body>
+  <h1>Clash of Clans Player Lookup</h1>
+  <input type="text" id="playerTag" placeholder="#PLAYER_TAG" />
+  <button onclick="fetchPlayer()">Get Info</button>
+  <div id="playerInfo"></div>
+
+  <script>
+    async function fetchPlayer() {
+      const tag = document.getElementById('playerTag').value.trim().replace('#', '');
+      const res = await fetch(`/api/player?tag=${tag}`);
+      const data = await res.json();
+
+      const info = document.getElementById('playerInfo');
+      if (res.ok) {
+        info.innerHTML = `
+          <p><strong>Name:</strong> ${data.name}</p>
+          <p><strong>Town Hall:</strong> ${data.townHallLevel}</p>
+          <p><strong>Trophies:</strong> ${data.trophies}</p>
+        `;
+      } else {
+        info.innerHTML = `<p style="color:red;">${data.message || data.error || 'Error'}</p>`;
+      }
+    }
+  </script>
+</body>
+</html>
