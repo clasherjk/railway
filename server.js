@@ -1,17 +1,15 @@
-import express from 'express';
-import fetch from 'node-fetch';
-import path from 'path';
-import dotenv from 'dotenv';
-
-dotenv.config();
+const express = require('express');
+const fetch = require('node-fetch');
+const path = require('path');
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Serve static HTML
-app.use(express.static('public'));
+// Serve static frontend from "public" folder
+app.use(express.static(path.join(__dirname, 'public')));
 
-// API route to proxy request
+// Backend API route to proxy RoyaleAPI
 app.get('/api/player', async (req, res) => {
   const tag = req.query.tag?.replace('#', '').toUpperCase();
   if (!tag) return res.status(400).json({ error: 'Missing player tag' });
@@ -30,4 +28,6 @@ app.get('/api/player', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
