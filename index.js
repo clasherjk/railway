@@ -68,7 +68,7 @@ bot.onText(/\/clan (.+)/, async (msg, match) => {
   const tag = match[1].replace('#', '%23');
 
   try {
-    const res = await fetchData(`https://proxy.royaleapi.dev/v1/clans/${tag}`);
+    const res = await fetchData(`https://cocproxy.royaleapi.dev/v1/clans/${tag}`);
     const c = res.data;
 
     const members = c.memberList
